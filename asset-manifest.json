@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/MikePortnoy1985/correct_counter/static/css/main.2b3c54dd.chunk.css",
+    "main.js": "/MikePortnoy1985/correct_counter/static/js/main.774572ad.chunk.js",
+    "main.js.map": "/MikePortnoy1985/correct_counter/static/js/main.774572ad.chunk.js.map",
+    "runtime-main.js": "/MikePortnoy1985/correct_counter/static/js/runtime-main.dfe4d714.js",
+    "runtime-main.js.map": "/MikePortnoy1985/correct_counter/static/js/runtime-main.dfe4d714.js.map",
+    "static/js/2.146f6a75.chunk.js": "/MikePortnoy1985/correct_counter/static/js/2.146f6a75.chunk.js",
+    "static/js/2.146f6a75.chunk.js.map": "/MikePortnoy1985/correct_counter/static/js/2.146f6a75.chunk.js.map",
+    "index.html": "/MikePortnoy1985/correct_counter/index.html",
+    "precache-manifest.a36ee4b4a556d1efa0532be09d19ce31.js": "/MikePortnoy1985/correct_counter/precache-manifest.a36ee4b4a556d1efa0532be09d19ce31.js",
+    "service-worker.js": "/MikePortnoy1985/correct_counter/service-worker.js",
+    "static/css/main.2b3c54dd.chunk.css.map": "/MikePortnoy1985/correct_counter/static/css/main.2b3c54dd.chunk.css.map",
+    "static/js/2.146f6a75.chunk.js.LICENSE.txt": "/MikePortnoy1985/correct_counter/static/js/2.146f6a75.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dfe4d714.js",
+    "static/js/2.146f6a75.chunk.js",
+    "static/css/main.2b3c54dd.chunk.css",
+    "static/js/main.774572ad.chunk.js"
+  ]
+}
