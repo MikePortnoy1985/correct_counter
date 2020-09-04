@@ -17,12 +17,10 @@ type SetUpDisplayPropsType = {
 function SetupDisplay(props: SetUpDisplayPropsType) {
 	const onChangeStartValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		props.setStartValue(Number.parseInt(event.currentTarget.value))
-		props.errorHandler()
 	}
 
 	const onChangeMaxValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		props.setMaxValue(Number.parseInt(event.currentTarget.value))
-		props.errorHandler()
 		props.setDisabled(false)
 	}
 
