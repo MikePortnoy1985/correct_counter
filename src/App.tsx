@@ -13,22 +13,8 @@ function App() {
 
 	useEffect(() => {
 		errorHandler()
+		getLocalStorage()
 	}, [startValue, maxValue]) // eslint-disable-line react-hooks/exhaustive-deps
-
-	useEffect(() => {
-		if (startValue === 0) {
-			const sV = localStorage.getItem('startValue')
-			sV && setStartValue(+sV)
-		}
-	}, [startValue]) // eslint-disable-line react-hooks/exhaustive-deps
-
-	useEffect(() => {
-		if (maxValue === 0) {
-			const mV = localStorage.getItem('maxValue')
-			mV && setMaxValue(+mV)
-			localStorage.clear()
-		}
-	}, [maxValue]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	const countHandler = () => {
 		if (count < maxValue) setCount(count + 1)
@@ -40,7 +26,7 @@ function App() {
 			setDisabled(true)
 		} else {
 			setError('enter values and press "set"')
-			setDisabled(false)
+			maxValue === 0 && startValue === 0 ? setDisabled(true) : setDisabled(false)
 		}
 	}
 
@@ -48,10 +34,23 @@ function App() {
 		if (startValue >= 0 && maxValue > startValue) {
 			setCount(startValue)
 			setError('')
-			localStorage.setItem('startValue', startValue + '')
-			localStorage.setItem('maxValue', maxValue + '')
 		}
 		setDisabled(true)
+	}
+
+	const localStorageHandler = () =>{
+		localStorage.setItem('startValue', startValue + '')
+		localStorage.setItem('maxValue', maxValue + '')
+	}
+
+	const getLocalStorage = () =>{
+		if (startValue === 0 && maxValue === 0) {
+			const sV = localStorage.getItem('startValue')
+			const mV = localStorage.getItem('maxValue')
+			sV && setStartValue(+sV)
+			mV && setMaxValue(+mV)
+			localStorage.clear()
+		}
 	}
 
 	const reset = () => {
@@ -68,9 +67,8 @@ function App() {
 						startValue={startValue}
 						maxValue={maxValue}
 						setHandler={setHandler}
-						errorHandler={errorHandler}
+						localStorageHandler={localStorageHandler}
 						disabled={disabled}
-						setDisabled={setDisabled}
 						error={error}
 					/>
 				</Paper>

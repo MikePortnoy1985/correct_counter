@@ -11,18 +11,18 @@ type CounterDisplayPropsType = {
 	reset: () => void
 }
 
-function CounterDisplay(props: CounterDisplayPropsType) {
+function CounterDisplay({ startValue, maxValue, value, error, countHandler, reset }: CounterDisplayPropsType) {
 	return (
 		<Grid container direction='column' justify='space-between' alignItems='center' spacing={3}>
-			<Grid	item	key={'a'} xs={12}>
-				{props.error ? (
-					props.error
+			<Grid item key={'a'} xs={12}>
+				{error ? (
+					error
 				) : (
 					<FormControl>
 						<OutlinedInput
 							className={'label'}
 							label='Counter'
-							value={props.value === props.maxValue ? 'Maximum value reached' : props.value}
+							value={value === maxValue ? 'Maximum value reached' : value}
 							type='text'
 						/>
 					</FormControl>
@@ -33,10 +33,8 @@ function CounterDisplay(props: CounterDisplayPropsType) {
 					<Button
 						variant='contained'
 						color='primary'
-						onClick={() => props.countHandler()}
-						disabled={
-							props.value < props.startValue || props.value === props.maxValue || props.error ? true : false
-						}>
+						onClick={() => countHandler()}
+						disabled={value < startValue || value === maxValue || error ? true : false}>
 						Increse
 					</Button>
 				</Grid>
@@ -44,8 +42,8 @@ function CounterDisplay(props: CounterDisplayPropsType) {
 					<Button
 						variant='contained'
 						color='primary'
-						onClick={() => props.reset()}
-						disabled={props.value <= props.startValue || props.error ? true : false}>
+						onClick={() => reset()}
+						disabled={value <= startValue || error ? true : false}>
 						Reset
 					</Button>
 				</Grid>
