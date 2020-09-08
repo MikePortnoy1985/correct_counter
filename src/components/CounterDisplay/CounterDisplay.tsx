@@ -13,8 +13,8 @@ type CounterDisplayPropsType = {
 
 function CounterDisplay(props: CounterDisplayPropsType) {
 	return (
-		<Grid container justify='space-around'>
-			<Grid item key={'a'} style={{ width: '260px', height: '190px', textAlign: 'center', verticalAlign: 'center' }}>
+		<Grid container direction='column' justify='space-between' alignItems='center' spacing={3}>
+			<Grid	item	key={'a'} xs={12}>
 				{props.error ? (
 					props.error
 				) : (
@@ -23,34 +23,31 @@ function CounterDisplay(props: CounterDisplayPropsType) {
 							className={'label'}
 							label='Counter'
 							value={props.value === props.maxValue ? 'Maximum value reached' : props.value}
-							style={{ margin: '20px' }}
 							type='text'
 						/>
 					</FormControl>
 				)}
 			</Grid>
-			<Grid item key={'b'}>
-				<Grid container>
-					<Grid item key={1} style={{ marginRight: '20px' }}>
-						<Button
-							variant='contained'
-							color='primary'
-							onClick={() => props.countHandler()}
-							disabled={
-								props.value < props.startValue || props.value === props.maxValue || props.error ? true : false
-							}>
-							Increse
-						</Button>
-					</Grid>
-					<Grid item key={2}>
-						<Button
-							variant='contained'
-							color='primary'
-							onClick={() => props.reset()}
-							disabled={props.value <= props.startValue || props.error ? true : false}>
-							Reset
-						</Button>
-					</Grid>
+			<Grid item key={'b'} xs={12} container direction='row' justify='center' alignItems='center'>
+				<Grid item key={111} xs={3}>
+					<Button
+						variant='contained'
+						color='primary'
+						onClick={() => props.countHandler()}
+						disabled={
+							props.value < props.startValue || props.value === props.maxValue || props.error ? true : false
+						}>
+						Increse
+					</Button>
+				</Grid>
+				<Grid item key={112} xs={3}>
+					<Button
+						variant='contained'
+						color='primary'
+						onClick={() => props.reset()}
+						disabled={props.value <= props.startValue || props.error ? true : false}>
+						Reset
+					</Button>
 				</Grid>
 			</Grid>
 		</Grid>

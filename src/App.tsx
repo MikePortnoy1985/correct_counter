@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import CounterDisplay from './components/CounterDisplay/CounterDisplay'
 import SetUpDisplay from './components/SetUpDisplay/SetUpDisplay'
 import './App.css'
-import { Container, Grid, Paper } from '@material-ui/core'
+import { Grid, Paper } from '@material-ui/core'
 
 function App() {
 	const [count, setCount] = useState(0)
@@ -13,11 +13,7 @@ function App() {
 
 	useEffect(() => {
 		errorHandler()
-	}, [startValue]) // eslint-disable-line react-hooks/exhaustive-deps
-
-	useEffect(() => {
-		errorHandler()
-	}, [maxValue]) // eslint-disable-line react-hooks/exhaustive-deps
+	}, [startValue, maxValue]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		if (startValue === 0) {
@@ -29,7 +25,7 @@ function App() {
 	useEffect(() => {
 		if (maxValue === 0) {
 			const mV = localStorage.getItem('maxValue')
-			mV && setMaxValue(+mV) 
+			mV && setMaxValue(+mV)
 			localStorage.clear()
 		}
 	}, [maxValue]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -48,7 +44,7 @@ function App() {
 		}
 	}
 
-	const setter = () => {
+	const setHandler = () => {
 		if (startValue >= 0 && maxValue > startValue) {
 			setCount(startValue)
 			setError('')
@@ -63,41 +59,35 @@ function App() {
 	}
 
 	return (
-		<Container>
-			<Grid container style={{ marginTop: '10%' }} spacing={10} direction='row' justify='center' alignItems='center'>
-				<Grid item key={1}>
-					<Paper
-						style={{ backgroundColor: '#06BAC5', padding: '20px', width: '300px', height: '250px' }}
-						elevation={3}>
-						<SetUpDisplay
-							setStartValue={setStartValue}
-							setMaxValue={setMaxValue}
-							startValue={startValue}
-							maxValue={maxValue}
-							setter={setter}
-							errorHandler={errorHandler}
-							disabled={disabled}
-							setDisabled={setDisabled}
-							error={error}
-						/>
-					</Paper>
-				</Grid>
-				<Grid item key={2}>
-					<Paper
-						style={{ backgroundColor: '#06BAC5', padding: '20px', width: '300px', height: '250px' }}
-						elevation={3}>
-						<CounterDisplay
-							value={count}
-							countHandler={countHandler}
-							startValue={startValue}
-							maxValue={maxValue}
-							reset={reset}
-							error={error}
-						/>
-					</Paper>
-				</Grid>
+		<Grid container style={{ marginTop: '15vh' }} spacing={10} direction='row' justify='center' alignItems='center'>
+			<Grid item xs={3} key={1}>
+				<Paper elevation={3}>
+					<SetUpDisplay
+						setStartValue={setStartValue}
+						setMaxValue={setMaxValue}
+						startValue={startValue}
+						maxValue={maxValue}
+						setHandler={setHandler}
+						errorHandler={errorHandler}
+						disabled={disabled}
+						setDisabled={setDisabled}
+						error={error}
+					/>
+				</Paper>
 			</Grid>
-		</Container>
+			<Grid item xs={3} key={2}>
+				<Paper elevation={3}>
+					<CounterDisplay
+						value={count}
+						countHandler={countHandler}
+						startValue={startValue}
+						maxValue={maxValue}
+						reset={reset}
+						error={error}
+					/>
+				</Paper>
+			</Grid>
+		</Grid>
 	)
 }
 
