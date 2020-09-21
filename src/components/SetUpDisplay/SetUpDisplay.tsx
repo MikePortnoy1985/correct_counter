@@ -5,12 +5,9 @@ import './../../App.css'
 type SetUpDisplayPropsType = {
 	startValue: number
 	maxValue: number
-	disabled: boolean
 	error: string
 	setStartValue: (value: number) => void
 	setMaxValue: (value: number) => void
-	setHandler: () => void
-	localStorageHandler: () => void
 }
 
 const useStyles = makeStyles({
@@ -22,12 +19,10 @@ const useStyles = makeStyles({
 function SetupDisplay({
 	startValue,
 	maxValue,
-	disabled,
+
 	error,
 	setStartValue,
 	setMaxValue,
-	setHandler,
-	localStorageHandler,
 }: SetUpDisplayPropsType) {
 	const onChangeStartValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		setStartValue(Number.parseInt(event.currentTarget.value))
@@ -58,17 +53,6 @@ function SetupDisplay({
 				value={startValue}
 				onChange={onChangeStartValueHandler}
 			/>
-			<Button
-				disableRipple
-				variant="contained"
-				color="primary"
-				onClick={() => {
-					setHandler()
-					localStorageHandler()
-				}}
-				disabled={disabled}>
-				Set
-			</Button>
 		</>
 	)
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import CounterDisplay from './components/CounterDisplay/CounterDisplay'
 import SetUpDisplay from './components/SetUpDisplay/SetUpDisplay'
 import './App.css'
-import { Grid, Paper, makeStyles, ThemeProvider } from '@material-ui/core'
+import { Grid, Paper, makeStyles, ThemeProvider, Button } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './styles/theme'
 
@@ -10,11 +10,17 @@ const useStyles = makeStyles({
 	grid: {
 		height: '250px',
 		marginTop: '15vh',
-		// flexWrap: 'nowrap',
 	},
 	paper: {
 		width: '300px',
 		height: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+	},
+	wrapper: {
+		height: '60%',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'space-around',
@@ -28,6 +34,7 @@ function App() {
 	const [maxValue, setMaxValue] = useState(0)
 	const [error, setError] = useState('enter values and press "set"')
 	const [disabled, setDisabled] = useState(true)
+	const [mainWindow, setMainWindow] = useState(true)
 
 	useEffect(() => {
 		errorHandler()
@@ -52,8 +59,8 @@ function App() {
 		if (startValue >= 0 && maxValue > startValue) {
 			setCount(startValue)
 			setError('')
+			setMainWindow(!mainWindow)
 		}
-		setDisabled(true)
 	}
 
 	const localStorageHandler = () => {
@@ -81,32 +88,52 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<Grid container className={classes.grid} spacing={5} direction="row" justify="center" alignItems="stretch">
-				<Grid item xs={3} key={1}>
-					<Paper className={classes.paper} elevation={3}>
-						<SetUpDisplay
-							setStartValue={setStartValue}
-							setMaxValue={setMaxValue}
-							startValue={startValue}
-							maxValue={maxValue}
-							setHandler={setHandler}
-							localStorageHandler={localStorageHandler}
-							disabled={disabled}
-							error={error}
-						/>
-					</Paper>
-				</Grid>
-				<Grid item xs={3} key={2}>
-					<Paper className={classes.paper} elevation={3}>
-						<CounterDisplay
-							value={count}
-							countHandler={countHandler}
-							startValue={startValue}
-							maxValue={maxValue}
-							reset={reset}
-							error={error}
-						/>
-					</Paper>
-				</Grid>
+				<Paper className={classes.paper} elevation={3}>
+					<div className={classes.wrapper}>
+						{mainWindow ? (
+							<SetUpDisplay
+								setStartValue={setStartValue}
+								setMaxValue={setMaxValue}
+								startValue={startValue}
+								maxValue={maxValue}
+								error={error}
+							/>
+						) : (
+							<CounterDisplay value={count} maxValue={maxValue} error={error} />
+						)}
+					</div>
+					<div>
+						<Button
+							style={{ marginRight: '20px' }}
+							disableRipple
+							variant="contained"
+							color="primary"
+							onClick={() => {
+								setHandler()
+								localStorageHandler()
+							}}
+							disabled={disabled}>
+							Set
+						</Button>
+						<Button
+							style={{ marginRight: '20px' }}
+							variant="contained"
+							color="primary"
+							onClick={() => countHandler()}
+							disableRipple
+							disabled={!!(count < startValue || count === maxValue || error)}>
+							Increase
+						</Button>
+						<Button
+							variant="contained"
+							color="primary"
+							onClick={() => reset()}
+							disableRipple
+							disabled={!!(count <= startValue || error)}>
+							Reset
+						</Button>
+					</div>
+				</Paper>
 			</Grid>
 		</ThemeProvider>
 	)
