@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react'
-import { OutlinedInput, FormControl, Button, Grid } from '@material-ui/core'
+import { Button, makeStyles, TextField } from '@material-ui/core'
 import './../../App.css'
 
 type SetUpDisplayPropsType = {
@@ -13,6 +13,12 @@ type SetUpDisplayPropsType = {
 	localStorageHandler: () => void
 }
 
+const useStyles = makeStyles({
+	textField: {
+		backgroundColor: 'white',
+		borderRadius: '4px',
+	},
+})
 function SetupDisplay({
 	startValue,
 	maxValue,
@@ -31,43 +37,39 @@ function SetupDisplay({
 		setMaxValue(Number.parseInt(event.currentTarget.value))
 	}
 
+	const classes = useStyles()
 	return (
-		<Grid container direction='column' justify='space-between' alignItems='center' spacing={3}>
-			<Grid item xs={12} key={11}>
-				<FormControl error={error === 'Incorrect value' ? true : false}>
-					<OutlinedInput
-						className={'label'}
-						label='Max value'
-						type={'number'}
-						value={maxValue}
-						onChange={onChangeMaxValueHandler}
-					/>
-				</FormControl>
-			</Grid>
-			<Grid item xs={12} key={12}>
-				<FormControl error={error === 'Incorrect value' ? true : false}>
-					<OutlinedInput
-						className={'label'}
-						label='Start value'
-						type={'number'}
-						value={startValue}
-						onChange={onChangeStartValueHandler}
-					/>
-				</FormControl>
-			</Grid>
-			<Grid item xs={12} key={1}>
-				<Button
-					variant='contained'
-					color='primary'
-					onClick={() => {
-						setHandler()
-						localStorageHandler()
-					}}
-					disabled={disabled}>
-					Set
-				</Button>
-			</Grid>
-		</Grid>
+		<>
+			<TextField
+				className={classes.textField}
+				variant="outlined"
+				error={error === 'Incorrect value'}
+				label="Max value"
+				type="number"
+				value={maxValue}
+				onChange={onChangeMaxValueHandler}
+			/>
+			<TextField
+				className={classes.textField}
+				variant="outlined"
+				error={error === 'Incorrect value'}
+				label="Start value"
+				type="number"
+				value={startValue}
+				onChange={onChangeStartValueHandler}
+			/>
+			<Button
+				disableRipple
+				variant="contained"
+				color="primary"
+				onClick={() => {
+					setHandler()
+					localStorageHandler()
+				}}
+				disabled={disabled}>
+				Set
+			</Button>
+		</>
 	)
 }
 

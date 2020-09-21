@@ -2,7 +2,25 @@ import React, { useState, useEffect } from 'react'
 import CounterDisplay from './components/CounterDisplay/CounterDisplay'
 import SetUpDisplay from './components/SetUpDisplay/SetUpDisplay'
 import './App.css'
-import { Grid, Paper } from '@material-ui/core'
+import { Grid, Paper, makeStyles, ThemeProvider } from '@material-ui/core'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import theme from './styles/theme'
+
+const useStyles = makeStyles({
+	grid: {
+		height: '250px',
+		marginTop: '15vh',
+		// flexWrap: 'nowrap',
+	},
+	paper: {
+		width: '300px',
+		height: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+	},
+})
 
 function App() {
 	const [count, setCount] = useState(0)
@@ -38,12 +56,12 @@ function App() {
 		setDisabled(true)
 	}
 
-	const localStorageHandler = () =>{
+	const localStorageHandler = () => {
 		localStorage.setItem('startValue', startValue + '')
 		localStorage.setItem('maxValue', maxValue + '')
 	}
 
-	const getLocalStorage = () =>{
+	const getLocalStorage = () => {
 		if (startValue === 0 && maxValue === 0) {
 			const sV = localStorage.getItem('startValue')
 			const mV = localStorage.getItem('maxValue')
@@ -57,35 +75,40 @@ function App() {
 		setCount(startValue)
 	}
 
+	const classes = useStyles()
+
 	return (
-		<Grid container style={{ marginTop: '15vh' }} spacing={10} direction='row' justify='center' alignItems='center'>
-			<Grid item xs={3} key={1}>
-				<Paper elevation={3}>
-					<SetUpDisplay
-						setStartValue={setStartValue}
-						setMaxValue={setMaxValue}
-						startValue={startValue}
-						maxValue={maxValue}
-						setHandler={setHandler}
-						localStorageHandler={localStorageHandler}
-						disabled={disabled}
-						error={error}
-					/>
-				</Paper>
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<Grid container className={classes.grid} spacing={5} direction="row" justify="center" alignItems="stretch">
+				<Grid item xs={3} key={1}>
+					<Paper className={classes.paper} elevation={3}>
+						<SetUpDisplay
+							setStartValue={setStartValue}
+							setMaxValue={setMaxValue}
+							startValue={startValue}
+							maxValue={maxValue}
+							setHandler={setHandler}
+							localStorageHandler={localStorageHandler}
+							disabled={disabled}
+							error={error}
+						/>
+					</Paper>
+				</Grid>
+				<Grid item xs={3} key={2}>
+					<Paper className={classes.paper} elevation={3}>
+						<CounterDisplay
+							value={count}
+							countHandler={countHandler}
+							startValue={startValue}
+							maxValue={maxValue}
+							reset={reset}
+							error={error}
+						/>
+					</Paper>
+				</Grid>
 			</Grid>
-			<Grid item xs={3} key={2}>
-				<Paper elevation={3}>
-					<CounterDisplay
-						value={count}
-						countHandler={countHandler}
-						startValue={startValue}
-						maxValue={maxValue}
-						reset={reset}
-						error={error}
-					/>
-				</Paper>
-			</Grid>
-		</Grid>
+		</ThemeProvider>
 	)
 }
 
