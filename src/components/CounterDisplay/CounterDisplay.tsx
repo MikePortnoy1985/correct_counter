@@ -1,27 +1,35 @@
 import React from 'react'
 import { TextField, Button } from '@material-ui/core'
-import './../../App.css'
+import { ReducerStateType, countHandlerAC, resetAC, ActionsType } from '../../store/reducer'
+import { Dispatch } from 'redux'
+import { ClassesType } from '../../App'
 
 type CounterDisplayPropsType = {
-	startValue: number
-	maxValue: number
-	value: number
-	error: string
-	countHandler: () => void
-	reset: () => void
+	classes: ClassesType
+	localState: ReducerStateType
+	dispatch: Dispatch<ActionsType>
 }
 
-function CounterDisplay({ startValue, maxValue, value, error, countHandler, reset }: CounterDisplayPropsType) {
+function CounterDisplay({ localState, dispatch, classes }: CounterDisplayPropsType) {
+	const style = {
+		backgroundColor: 'white',
+		padding: '0 6px',
+		borderRadius: '4px',
+		transform: 'translate(11px, -6px) scale(0.75)',
+	}
+
 	return (
 		<>
 			<div>
-				{error ? (
-					error
+				{localState.error ? (
+					localState.error
 				) : (
 					<TextField
+						className={classes.textField}
 						variant="outlined"
 						label="Counter"
-						value={value === maxValue ? 'Maximum value reached' : value}
+						InputLabelProps={{ style: style }}
+						value={localState.count === localState.maxValue ? 'Maximum value reached' : localState.count}
 						type="text"
 					/>
 				)}
@@ -31,17 +39,25 @@ function CounterDisplay({ startValue, maxValue, value, error, countHandler, rese
 					style={{ marginRight: '20px' }}
 					variant="contained"
 					color="primary"
-					onClick={() => countHandler()}
+					onClick={() => {
+						dispatch(countHandlerAC())
+					}}
 					disableRipple
-					disabled={!!(value < startValue || value === maxValue || error)}>
+					disabled={
+						!!(
+							localState.count < localState.startValue ||
+							localState.count === localState.maxValue ||
+							localState.error
+						)
+					}>
 					Increase
 				</Button>
 				<Button
 					variant="contained"
 					color="primary"
-					onClick={() => reset()}
+					onClick={() => dispatch(resetAC())}
 					disableRipple
-					disabled={!!(value <= startValue || error)}>
+					disabled={!!(localState.count <= localState.startValue || localState.error)}>
 					Reset
 				</Button>
 			</div>

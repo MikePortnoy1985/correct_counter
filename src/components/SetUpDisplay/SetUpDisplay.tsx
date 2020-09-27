@@ -1,61 +1,51 @@
 import React, { ChangeEvent } from 'react'
-import { Button, makeStyles, TextField } from '@material-ui/core'
-import './../../App.css'
+import { Button, TextField, Theme } from '@material-ui/core'
+import { ActionsType, ReducerStateType, setHandlerAC, setMaxValueAC, setStartValueAC } from '../../store/reducer'
+import { Dispatch } from 'redux'
+import { ClassesType } from '../../App'
 
 type SetUpDisplayPropsType = {
-	startValue: number
-	maxValue: number
-	disabled: boolean
-	error: string
-	setStartValue: (value: number) => void
-	setMaxValue: (value: number) => void
-	setHandler: () => void
+	classes: ClassesType
+	localState: ReducerStateType
+	dispatch: Dispatch<ActionsType>
 	localStorageHandler: () => void
 }
 
-const useStyles = makeStyles({
-	textField: {
-		backgroundColor: 'white',
-		borderRadius: '4px',
-	},
-})
-function SetupDisplay({
-	startValue,
-	maxValue,
-	disabled,
-	error,
-	setStartValue,
-	setMaxValue,
-	setHandler,
-	localStorageHandler,
-}: SetUpDisplayPropsType) {
+function SetupDisplay({ localState, dispatch, localStorageHandler, classes }: SetUpDisplayPropsType) {
 	const onChangeStartValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
-		setStartValue(Number.parseInt(event.currentTarget.value))
+		dispatch(setStartValueAC(Number.parseInt(event.currentTarget.value)))
 	}
 
 	const onChangeMaxValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
-		setMaxValue(Number.parseInt(event.currentTarget.value))
+		dispatch(setMaxValueAC(Number.parseInt(event.currentTarget.value)))
+	}
+	const style = {
+		backgroundColor: 'white',
+		padding: '0 6px',
+		borderRadius: '4px',
+		transform: 'translate(11px, -6px) scale(0.75)',
 	}
 
-	const classes = useStyles()
 	return (
 		<>
 			<TextField
 				className={classes.textField}
 				variant="outlined"
-				error={error === 'Incorrect value'}
+				error={localState.error === 'Incorrect value'}
 				label="Max value"
 				type="number"
-				value={maxValue}
+				InputLabelProps={{ style: style }}
+				value={localState.maxValue}
 				onChange={onChangeMaxValueHandler}
 			/>
 			<TextField
 				className={classes.textField}
 				variant="outlined"
-				error={error === 'Incorrect value'}
+				error={localState.error === 'Incorrect value'}
 				label="Start value"
 				type="number"
-				value={startValue}
+				InputLabelProps={{ style: style }}
+				value={localState.startValue}
 				onChange={onChangeStartValueHandler}
 			/>
 			<Button
@@ -63,10 +53,10 @@ function SetupDisplay({
 				variant="contained"
 				color="primary"
 				onClick={() => {
-					setHandler()
+					dispatch(setHandlerAC())
 					localStorageHandler()
 				}}
-				disabled={disabled}>
+				disabled={localState.disabled}>
 				Set
 			</Button>
 		</>
