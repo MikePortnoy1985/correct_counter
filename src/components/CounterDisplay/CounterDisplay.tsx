@@ -11,6 +11,7 @@ type CounterDisplayPropsType = {
 }
 
 function CounterDisplay({ localState, dispatch, classes }: CounterDisplayPropsType) {
+	console.log('counter')
 	const style = {
 		backgroundColor: 'white',
 		padding: '0 6px',

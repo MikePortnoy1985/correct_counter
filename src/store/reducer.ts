@@ -28,6 +28,7 @@ type setStartValueACType = {
 	type: Actions.SET_START_VALUE
 	startValue: number
 }
+
 type setMaxValueACType = {
 	type: Actions.SET_MAX_VALUE
 	maxValue: number
@@ -36,6 +37,7 @@ type setMaxValueACType = {
 type setHandlerACType = {
 	type: Actions.SET_HANDLER
 }
+
 type setErrorACType = {
 	type: Actions.SET_ERROR
 	error: 'enter values and press "set"' | 'Incorrect value' | ''

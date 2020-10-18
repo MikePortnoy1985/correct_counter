@@ -19,6 +19,7 @@ function SetupDisplay({ localState, dispatch, localStorageHandler, classes }: Se
 	const onChangeMaxValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
 		dispatch(setMaxValueAC(Number.parseInt(event.currentTarget.value)))
 	}
+
 	const style = {
 		backgroundColor: 'white',
 		padding: '0 6px',
